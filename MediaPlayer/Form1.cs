@@ -8,11 +8,12 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using WMPLib;
-
+using System.Runtime.InteropServices;
 namespace MediaPlayer
 {
     public partial class Form1 : Form
     {
+        
         public Form1()
         {
             InitializeComponent();
@@ -74,8 +75,9 @@ namespace MediaPlayer
 
         private void Form1_Load(object sender, EventArgs e)
         {
-
+            
         }
+      
 
         private void textBox1_TextChanged(object sender, EventArgs e)
         {
@@ -106,20 +108,15 @@ namespace MediaPlayer
             }
             progresslabel.Text = axWindowsMediaPlayer2.Ctlcontrols.currentPositionString;
             progresslabel2.Text = axWindowsMediaPlayer2.Ctlcontrols.currentItem.durationString.ToString();
+
+           
+
         }
 
         private void progressBar1_Click(object sender, EventArgs e)
         {
-            //if (axWindowsMediaPlayer1.currentMedia.duration != 0)
-            //{
-            //    double newper = Convert.ToDouble((progressBar1.Value) / 100);
-            //    int durationVar = Convert.ToInt32(axWindowsMediaPlayer1.currentMedia.duration * 1000);
-            //    int pos = Convert.ToInt32((durationVar * newper) / 1000);
-
-            //}
-            //else
-            //    progressBar1.Value = 0;
-            //if (mediaPlayer.playState == WMPPlayState.wmppsReady)
+           
+           //` if (mediaPlayer.playState == WMPPlayState.wmppsReady)
             //{
             //    progressBar1.Maximum = (int)mediaPlayer.Ctlcontrols.currentItem.duration;
             //    progressBar1.Value = (int)mediaPlayer.Ctlcontrols.currentPosition;
@@ -150,17 +147,11 @@ namespace MediaPlayer
 
         private void mediaPlayer_PlayStateChange(object sender, AxWMPLib._WMPOCXEvents_PlayStateChangeEvent e)
 
-        {
-                //if (axWindowsMediaPlayer1.playState == WMPLib.WMPPlayState.wmppsPlaying)
-                //{
-                //    progressBar1.Maximum = (intaxWindowsMediaPlayer1.Ctlcontrols.currentItem.duration;
-                //    progressBar1.Value = (int)axWindowsMediaPlayer1.Ctlcontrols.currentPosition;
-                //}
-                //progresslabel.Text = axWindowsMediaPlayer1.Ctlcontrols.currentPositionString;
-                //progresslabel2.Text = axWindowsMediaPlayer1.Ctlcontrols.currentItem.durationString.ToString();
+        { 
+
         }
 
-      
+
 
         private void fastforword_Click(object sender, EventArgs e)
         {
@@ -186,7 +177,7 @@ namespace MediaPlayer
 
         private void AxWindowsMediaPlayer1(object sender, EventArgs e)
         {
-
+           
         }
 
         private void openFileDialog1_FileOk(object sender, CancelEventArgs e)
@@ -294,7 +285,49 @@ namespace MediaPlayer
 
         private void axWindowsMediaPlayer2_Enter(object sender, EventArgs e)
         {
+            
+        }
 
+        private void progressBar1_VisibleChanged(object sender, EventArgs e)
+        {
+
+           
+        }
+
+       // private void progressBar1_Scroll(object sender, ScrollEventArgs e)
+        //{
+        //    if (axWindowsMediaPlayer2.currentMedia.duration >< 0)
+        //    {
+        //        double newper = Convert.ToDouble(progressBar1.Value)/100;
+        //        int durationVar = Convert.ToInt32(axWindowsMediaPlayer2.currentMedia.duration * 10000);
+        //        int pos = Convert.ToInt32((durationVar * newper) / 10000);
+        //        axWindowsMediaPlayer2.Ctlcontrols.currentPosition = pos;
+
+        //    }
+        //    else
+        //        progressBar1.Value = 0;
+        //}
+
+        private void progressBar1_Click_1(object sender, EventArgs e)
+        {
+            if (axWindowsMediaPlayer2.currentMedia.duration!=0)
+            {
+                double newper = Convert.ToDouble(progressBar1.Value) / 100;
+                int durationVar = Convert.ToInt32(axWindowsMediaPlayer2.currentMedia.duration * 1000);
+                int pos = Convert.ToInt32((durationVar * newper) / 1000);
+                axWindowsMediaPlayer2.Ctlcontrols.currentPosition += pos;
+            }
+
+               else if (axWindowsMediaPlayer2.currentMedia.duration < progressBar1.Value)
+            {
+                double newper = Convert.ToDouble(progressBar1.Value) / 100;
+                int durationVar = Convert.ToInt32(axWindowsMediaPlayer2.currentMedia.duration * 1000);
+                int pos = Convert.ToInt32((durationVar * newper) / 1000);
+                axWindowsMediaPlayer2.Ctlcontrols.currentPosition -= pos;
+
+            }
+            else
+                progressBar1.Value = 0;
         }
 
         private void previous_Click(object sender, EventArgs e)
